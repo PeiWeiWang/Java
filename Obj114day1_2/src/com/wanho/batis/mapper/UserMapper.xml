@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanho.batis.mapper.UserMapper">
+    <!-- 根据rowid取得一个User对象 ,parameterType:输入参数的类型 resultType:输出参数类型-->
+	<select id="getUserById" parameterType="int" resultType="com.wanho.batis.domain.User">
+		select * from user where rowid = #{id}
+	</select>
+	<select id="getUsersByName" parameterType="java.lang.String" resultType="com.wanho.batis.domain.User">
+	    select * from user where username like '%${value}%'	                              
+	</select>
+	<!-- #{username} 对应User里的属性 -->
+	<insert id="addUser" parameterType="com.wanho.batis.domain.User">
+	    insert into user (username,password,wechart,email) values(#{username},#{password},#{wechart},#{email})
+	</insert>
+	<insert id="addUserKey" parameterType="com.wanho.batis.domain.User">
+	<!-- selectKey将主键返回，需要再返回 -->
+		<selectKey keyProperty="rowid" order="AFTER" resultType="java.lang.Integer">
+			select LAST_INSERT_ID()
+		</selectKey>
+	    insert into user (username,password,wechart,email) values(#{username},#{password},#{wechart},#{email})
+	</insert>
+	<update id="updateUser" parameterType="com.wanho.batis.domain.User">
+		update user set username=#{username},password=#{password},wechart=#{wechart},email=#{email} where rowid=#{rowid}
+	</update>
+	<delete id="delUser" parameterType="int">
+	    delete from user where rowid=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,27 @@
+1.getProperty(...):能够获取定义在任意对象中的指定属性的值
+2.getProperty2(...):能够获取定义在任意对象中的指定属性的值(包括继承来的属性)
+
+注解:给编译工具(JVM)看的注释
+
+内置注解:
+@Deprecated : 被此注解注释的类/方法/成员变量,表示已过时---不影响正常的使用,但出现问题,编写者不负责
+@SuppressWarnings:通知JVM,忽视调用者不符合java规范的使用方式
+@Override:表示子类重写父类的方法
+
+元注解:  java用于 注释自定义注解的注解(定义使用范围,保留政策)
+
+@Target:自定义注解的使用范围
+		ElementType.type:可以用于注解类
+		ElementType.method:可以用于注解方法
+		ElementType.FIELD:可以用于注解属性
+		ElementType.PARAMTER:可以用于注解方法的参数
+
+@Retention:注解的保留政策(默认不保留):程序可以在什么时候获取到注解
+	RetentionPolicy.SOURCE:源文件中保留(自己写的时候保留)
+	RetentionPolicy.CLASS:编译时保留
+	RetentionPolicy.RUNTIME:运行时保留-----唯一可以使用反射获取注解的保留政策
+	
+@Documented:使用此注解的元素,在生成帮助文档时,保留注解------标志注解	
+@Inherited:标志注解	
+
+

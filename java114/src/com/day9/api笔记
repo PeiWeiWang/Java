@@ -1,0 +1,15 @@
+String ：代表字符串，String的值一旦确定，不可改变，可以共享（字符串缓冲区）
+
+StringBuffer:线程安全的可变字符序列
+StringBuilder:线程不安全的可变字符序列
+
+效率
+StringBuilder>StringBuffer>String
+
+日期处理类  util.Date:表示1970-1-1 到当前时间的毫秒数
+sqlDate： util.Date子类，专用于数据库
+
+ util.Date----》sqlDate
+ Date nowDate = new Date();//先将utildate转为毫秒数
+		java.sql.Date sqlDate = new java.sql.Date(nowDate.getTime());//放入sql.Date的构造方法
+		System.out.println(sqlDate);

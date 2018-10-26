@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanho.batis.mapper.UserCardMapper">
+	<resultMap type="TUser" id="tuser">
+		<id property="id" column="rowid" />
+		<result property="name" column="username" />
+		<result property="pwd" column="password" />
+		<result property="weixin" column="wechart" />
+		<result property="email" column="email" />
+	</resultMap>
+	<!-- 根据user里的username和idcard里的cardname模糊查询 -->
+	<select id="getUsersByVo" parameterType="UserCardVo"
+		resultType="User">
+		select user.* from user join idcard on user.rowid =
+		idcard.userid
+		where username like '%${user.username}%' or cardname like
+		'%${card.cardname}%'
+	</select>
+	<!-- 如果输出的类型和数据库表结构的字段名不一致,name怎么对应上 -->
+
+	<select id="getTuserById" parameterType="int" resultMap="tuser">
+		select *
+		from user where rowid=#{id}
+	</select>
+	<!-- 模糊查询,输入的条件可能是username,也可能是wechart,也可能都有 -->
+	<select id="getUserByIf" parameterType="User" resultType="User">
+		select *from user where 1=1
+		<if test="username!=null and username!=''">
+			and username like '%${username}%'
+		</if>
+		<if test="wechart!=null and wechart!=''">
+			and wechart like '%${wechart}%'
+		</if>
+	</select>
+	<select id="getUserByWhere" parameterType="User"
+		resultType="User">
+		select *from user
+		<where>
+			<if test="username!=null and username!=''">
+				and username like '%${username}%'
+			</if>
+			<if test="wechart!=null and wechart!=''">
+				and wechart like '%${wechart}%'
+			</if>
+		</where>
+	</select>
+	<select id="getUserByIds" parameterType="UserCardVo"
+		resultType="User">
+		select * from user
+		<where>
+			<if test="idList!=null and idList.size>0">
+				<foreach collection="idList" item="id" separator="," open="and rowid in(" close=")">
+					#{id}
+				</foreach>
+			</if>
+			<if test="user.username!=null and user.username!=''">
+			and username like '%${user.username}%'
+			</if>
+		</where>
+	</select>
+</mapper>

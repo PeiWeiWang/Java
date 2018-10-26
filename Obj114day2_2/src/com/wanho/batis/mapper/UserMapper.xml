@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wanho.batis.mapper.UserMapper">
+	<resultMap type="IdCard" id="IdCardMap">
+		<id column="cardno" property="cardno" />
+		<result column="cardname" property="cardname" />
+		<result column="cardadd" property="cardaddress" />
+		<!--association表示1对1是指IdCard里的一个对象 -->
+		<!-- property IdCard里User的属性 -->
+		<association property="user" javaType="com.wanho.batis.domain.User">
+			<id column="rowid" property="rowid" />
+			<result column="username" property="username" />
+			<result column="password" property="password" />
+			<result column="wechart" property="wechart" />
+			<result column="email" property="email" />
+		</association>
+	</resultMap>
+	<resultMap type="User" id="userMap">
+	<id column="rowid" property="rowid" />
+			<result column="username" property="username" />
+			<result column="password" property="password" />
+			<result column="wechart" property="wechart" />
+			<result column="email" property="email" />
+			<!-- collection 处理是一对多关系里,多的这方, -->
+			<collection property="addList" ofType="Address">
+			<id column="addrtype" property="addrType" />
+			<result column="addrName" property="addrName" />
+			</collection>
+	</resultMap>
+	<resultMap type="User" id="userRoleMap">
+	<id column="rowid" property="rowid" />
+			<result column="username" property="username" />
+			<result column="password" property="password" />
+			<result column="wechart" property="wechart" />
+			<result column="email" property="email" />
+			<!-- collection 处理是一对多关系里,多的这方, -->
+			<collection property="roles" ofType="Role">
+			<id column="roleid" property="roleid" />
+			<result column="rolename" property="rolename" />
+			</collection>
+	</resultMap>
+	<!-- 查询一个身份证信息,并且把个人信息也显示出来. -->
+	<select id="getCardByCardno" parameterType="java.lang.String"
+		resultMap="IdCardMap">
+		select * from idcard join user on idcard.userid = user.rowid where cardno
+		like '%${value}%'
+	</select>
+	<!-- 根据用户id查询出用户信息,和地址信息 -->
+	<select id="getUserAndAddrById" parameterType="int" resultMap="userMap">
+	select * from user join address on user.rowid = address.userid where rowid =#{id}
+	</select>
+	<!-- 多对多 -->
+	<select id="getUserRoleById" parameterType="int" resultMap="userRoleMap">
+	select user.*,role.* from user left join user_role on user.rowid = user_role.userid
+	left join role on role.roleid = user_role.roleid where user.rowid = #{id}
+	</select>
+</mapper>

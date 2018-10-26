@@ -1,0 +1,68 @@
+abstract：抽象化
+
+abstract修饰方法：抽象方法
+抽象方法不能有方法体
+
+含有抽象方法的类称为抽象类，使用abstract进行修饰
+---抽象类可以含有构造方法，但不能够实例化---
+
+继承了抽象类的子类，必须实现（重写）父类所有的抽象方法；否则，还是一个抽象类
+
+注意：
+1.属性不能使用抽象进行修饰
+2.一个抽象类中可以包含0-N个抽象方法
+3.抽象方法不能同时使用static、final修饰；abstract和final不能同时修饰类
+4.抽象类中可以包含成员属性、构造方法、普通方法、抽象方法
+
+
+接口 ：接口使用interface进行修饰
+1.定义在接口中的变量默认使用public static final修饰，必须在定义的同时赋值（常量）
+2.接口中不含有构造方法
+3.定义在接口中的方法默认使用public abstract修饰，全是抽象方法
+
+4.接口可以使用extends继承N个接口，使用,分开
+5.类不能继承接口，但可以使用implements关键字实现N个接口；同时可以继承某个类
+
+
+
+Object类
+Obj1 ==  obj1 比较的是两个对象的内存地址是否相同
+equals方法:比较的是内容（自定义类都要进行重写Object类的equals方法）
+如要实现对象内容的比较，必须重写equals方法，指定比较的规则
+
+@Override
+	public boolean equals(Object obj) {
+		//1.如obj为null，不比
+		if(obj==null){
+			return false;
+		}
+		//2.确定obj是否是目标类的对象
+		if(!(obj instanceof Dept)){
+			return false;//如不是部门对象，没有比较的意义
+		}
+		
+		//3.能执行到此步，说明对象是一个部门对象
+		Dept other =(Dept)obj;
+		
+		//4.设定比较的条件
+		if(this.deptno==other.deptno&&this.dname.equals(other.dname)){
+			return true;
+		}
+		
+		return false;
+	}
+
+
+java常用包
+	io：输入输出流
+	lang：基本包,定义在此包中的类由java自动import
+	net:网络通信类
+	sql:操作数据库相关类
+	text：格式化字符串
+	util：工具类包
+
+
+
+
+
+

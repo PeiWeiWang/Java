@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.springframework.org/schema/aop" 
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop 
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+        <bean id="vender" class="com.wanho.aop.proxy.Vender"></bean>
+        
+        <!-- 切面类 -->
+        <bean id="sellAspect" class="com.wanho.aop.spring.SellAspect"></bean>
+        <!-- aop的配置 -->
+        <aop:config>
+        	<!-- 配置切入点，哪些类或者哪些函数需要通知/增强 -->
+        	<aop:pointcut expression="execution(* com.wanho.aop.proxy.Seller.sell(..) )" id="pointcut1"  />
+            <aop:pointcut expression="execution(* com.wanho.aop.proxy.Seller.ad(..) )" id="pointcut2"  />   
+            <aop:aspect ref="sellAspect">
+            	<aop:before method="before" pointcut-ref="pointcut1"></aop:before>
+                <aop:after method="after" pointcut-ref="pointcut2"></aop:after>
+            </aop:aspect>
+        </aop:config>
+</beans>

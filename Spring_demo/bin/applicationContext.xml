@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+<bean id="helloworld" class="com.frank.spring.helloworld.Helloworld">
+<property name="name" value="Frank"></property>
+</bean>
+<bean id="student" class="com.frank.spring.student.Student">
+<constructor-arg  value="100"></constructor-arg>
+<constructor-arg  value="Frank"></constructor-arg>
+<constructor-arg  value="18"></constructor-arg>
+<constructor-arg  value="男"></constructor-arg>
+<constructor-arg  value="address"></constructor-arg>
+</bean>
+</beans>
